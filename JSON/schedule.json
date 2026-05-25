@@ -1,0 +1,23 @@
+{
+  "user_id": "1",
+  "last_updated": "2026-05-25T12:00:00Z",
+  "working_hours": {
+    "start": "09:00",
+    "end": "17:00",
+    "work_days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+  },
+  "blocked_slots": [
+    {
+      "title": "Hoorcollege Data Driven Decision Making",
+      "date": "2026-05-26",
+      "start_time": "10:00",
+      "end_time": "12:30"
+    },
+    {
+      "title": "Wekelijks overleg manager",
+      "date": "2026-05-27",
+      "start_time": "14:00",
+      "end_time": "15:00"
+    }
+  ]
+}

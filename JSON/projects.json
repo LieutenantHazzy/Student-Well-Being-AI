@@ -1,0 +1,92 @@
+{
+  "projects": [
+    {
+      "project_id": "proj_001",
+      "title": "Minor DDDM Eindopdracht",
+      "deadline": "2026-06-15",
+      "priority_score": 1, 
+      "status": "in_progress",
+      "phases": {
+        "concept": [
+          {
+            "task_id": "t_001",
+            "title": "Brainstormen over AI-agent use case",
+            "hours_required": 2.0,
+            "status": "completed",
+            "scheduled_slot": {
+              "date": "2026-05-20",
+              "start_time": "09:00",
+              "end_time": "11:00"
+            }
+          }
+        ],
+        "planning": [
+          {
+            "task_id": "t_002",
+            "title": "Opstellen CRISP-DM Business Understanding",
+            "hours_required": 1.5,
+            "status": "scheduled",
+            "scheduled_slot": {
+              "date": "2026-05-26",
+              "start_time": "13:00",
+              "end_time": "14:30"
+            }
+          }
+        ],
+        "execution": [
+          {
+            "task_id": "t_003",
+            "title": "Bouwen van rule-based scoring algoritme",
+            "hours_required": 4.0,
+            "status": "backlog",
+            "scheduled_slot": null
+          }
+        ],
+        "controlling": [
+          {
+            "task_id": "t_004",
+            "title": "Stress-testing en hallucinatie check",
+            "hours_required": 1.0, 
+            "status": "backlog",
+            "scheduled_slot": null
+          }
+        ],
+        "closing": [
+          {
+            "task_id": "t_005",
+            "title": "Documentatie afronden en inleveren",
+            "hours_required": 0.5, 
+            "status": "backlog",
+            "scheduled_slot": null
+          }
+        ]
+      }
+    },
+    {
+  "project_title": "Student Well-being AI Application",
+  "deadline": "2023-06-01",
+  "phases": {
+    "concept": [
+      {"title": "Define problem statement and key features", "hours_required": 2.0}
+    ],
+    "planning": [
+      {"title": "Integrate Google Calendar API to fetch user's events and available timeslots", "hours_required": 3.0},
+      {"title": "Design JSON object structure for task data collection", "hours_required": 1.5},
+      {"title": "Plan Q&A session to fill in project JSON structure", "hours_required": 2.0}
+    ],
+    "execution": [
+      {"title": "Implement Google Calendar API integration and available timeslot fetching", "hours_required": 8.0},
+      {"title": "Develop AI logic for task scheduling and optimization", "hours_required": 10.0},
+      {"title": "Integrate JSON object structure with AI logic for task data collection", "hours_required": 5.0}
+    ],
+    "controlling": [
+      {"title": "Test and refine AI-powered task scheduler", "hours_required": 4.0}
+    ],
+    "closing": [
+      {"title": "Document lessons learned and evaluation of success", "hours_required": 2.0},
+      {"title": "Finalize project report and presentation materials", "hours_required": 2.0}
+    ]
+  }
+}
+  ]
+}
