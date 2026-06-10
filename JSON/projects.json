@@ -1,56 +1,95 @@
 {
-  "project_title": "Student Well-being AI Application",
-  "deadline": "2026-06-01",
-  "phases": {
-    "concept": [
-      {
-        "title": "Define problem statement and key features",
-        "hours_required": 2.0
-      }
-    ],
-    "planning": [
-      {
-        "title": "Design JSON object structure for task data collection",
-        "hours_required": 0.75
+  "projects": [
+    {
+      "project_title": "Student Well-being AI Application",
+      "deadline": "2026-06-12",
+      "phases": {
+        "concept": [
+          {
+            "title": "Define problem statement and key features",
+            "hours_required": 2.0
+          }
+        ],
+        "planning": [
+          {
+            "title": "Design JSON object structure for task data collection",
+            "hours_required": 0.75
+          },
+          {
+            "title": "Plan Q&A session to fill in project JSON structure",
+            "hours_required": 1.0
+          },
+          {
+            "title": "Allow users to export Google/Teams calendar as CSV file",
+            "hours_required": 0.5
+          }
+        ],
+        "execution": [
+          {
+            "title": "Implement CSV export feature from user's calendar",
+            "hours_required": 2.25
+          },
+          {
+            "title": "Develop AI logic for task scheduling and optimization",
+            "hours_required": 5.0
+          },
+          {
+            "title": "Integrate JSON object structure with AI logic for task data collection",
+            "hours_required": 2.5
+          }
+        ],
+        "controlling": [
+          {
+            "title": "Test and refine AI-powered task scheduler",
+            "hours_required": 2.0
+          }
+        ],
+        "closing": [
+          {
+            "title": "Document lessons learned and evaluation of success",
+            "hours_required": 1.0
+          },
+          {
+            "title": "Finalize project report and presentation materials",
+            "hours_required": 1.0,
+            "deadline": "2026-06-11"
+          },
+          {
+            "title": "Record demo for student well-being app",
+            "hours_required": 2.5,
+            "deadline": "2026-06-11"
+          },
+          {
+            "title": "Presentation on the 13th",
+            "hours_required": 3.0,
+            "deadline": "2026-06-13"
+          }
+        ]
       },
-      {
-        "title": "Plan Q&A session to fill in project JSON structure",
-        "hours_required": 1.0
+      "project_id": "proj_001"
+    },
+    {
+      "project_title": "Data Science Portfolio Website",
+      "deadline": "2026-06-20",
+      "phases": {
+        "concept": [
+          {
+            "title": "Research new trends in portfolios",
+            "hours_required": 3.0
+          }
+        ],
+        "planning": [],
+        "execution": [],
+        "controlling": [],
+        "closing": []
       },
-      {
-        "title": "Allow users to export Google/Teams calendar as CSV file",
-        "hours_required": 0.5
-      }
-    ],
-    "execution": [
-      {
-        "title": "Implement CSV export feature from user's calendar",
-        "hours_required": 2.25
-      },
-      {
-        "title": "Develop AI logic for task scheduling and optimization",
-        "hours_required": 5.0
-      },
-      {
-        "title": "Integrate JSON object structure with AI logic for task data collection",
-        "hours_required": 2.5
-      }
-    ],
-    "controlling": [
-      {
-        "title": "Test and refine AI-powered task scheduler",
-        "hours_required": 2.0
-      }
-    ],
-    "closing": [
-      {
-        "title": "Document lessons learned and evaluation of success",
-        "hours_required": 1.0
-      },
-      {
-        "title": "Finalize project report and presentation materials",
-        "hours_required": 1.0
-      }
-    ]
-  }
+      "project_id": "proj_002"
+    },
+    {
+      "title": "Presentation on the 13th",
+      "hours_required": 3.0,
+      "deadline": "2026-06-13",
+      "project_id": "5fb61c8ee1f7"
+    }
+  ]
 }

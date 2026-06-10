@@ -1,0 +1,274 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.chat-header h1 {
+  font-size: 18px;
+  margin: 0;
+  color: var(--text-h);
+}
+
+.new-chat-btn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--accent-bg);
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.new-chat-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--bg);
+}
+
+.welcome {
+  text-align: center;
+  color: var(--text);
+  margin-top: 80px;
+}
+
+.welcome .examples {
+  font-size: 14px;
+  opacity: 0.7;
+  margin-top: 8px;
+}
+
+.message {
+  display: flex;
+}
+
+.message.user {
+  justify-content: flex-end;
+}
+
+.message.assistant {
+  justify-content: flex-start;
+}
+
+.bubble {
+  max-width: 70%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  line-height: 1.5;
+  font-size: 15px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.message.user .bubble {
+  background: var(--accent);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.message.assistant .bubble {
+  background: var(--code-bg);
+  color: var(--text-h);
+  border-bottom-left-radius: 4px;
+}
+
+.status-msg {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text);
+  opacity: 0.7;
+  padding: 4px 0;
+  font-style: italic;
+}
+
+.tool-msg {
+  text-align: center;
+  font-size: 13px;
+  color: var(--accent);
+  padding: 2px 0;
+  font-family: ui-monospace, Consolas, monospace;
+}
+
+.typing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 20px;
+}
+
+.dot-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text);
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+.input-bar {
+  display: flex;
+  gap: 8px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.input-bar input {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 15px;
+  background: var(--code-bg);
+  color: var(--text-h);
+  outline: none;
+}
+
+.input-bar input:focus {
+  border-color: var(--accent);
+}
+
+.input-bar input:disabled {
+  opacity: 0.5;
+}
+
+.input-bar button {
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.input-bar button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.input-bar button:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.confirm-dialog {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 520px;
+  width: 90%;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.confirm-dialog h3 {
+  margin: 0 0 12px;
+  color: var(--text-h);
+  font-size: 18px;
+}
+
+.confirm-detail {
+  font-size: 14px;
+  color: var(--text);
+  background: var(--code-bg);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  word-break: break-word;
+  font-family: ui-monospace, Consolas, monospace;
+  line-height: 1.5;
+}
+
+.diff-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  font-size: 13px;
+  font-family: ui-monospace, Consolas, monospace;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.diff-list li {
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: 2px;
+}
+
+.diff-add {
+  background: var(--green-bg);
+  color: var(--green);
+}
+
+.diff-rem {
+  background: var(--amber-bg);
+  color: var(--amber);
+}
+
+.diff-neutral {
+  color: var(--text);
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.confirm-btn {
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.confirm-btn.approve {
+  background: var(--accent);
+  color: #fff;
+}
+
+.confirm-btn.reject {
+  background: var(--border);
+  color: var(--text-h);
+}
+
+.confirm-btn:hover {
+  opacity: 0.85;
+}

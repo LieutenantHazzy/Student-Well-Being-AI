@@ -1,48 +1,100 @@
 [
   {
+    "title": "Finalize project report and presentation materials",
+    "phase": "closing",
+    "project_id": "proj_001",
+    "project_title": "Student Well-being AI Application",
+    "date": "2026-06-08",
+    "start_time": "09:00",
+    "end_time": "10:00",
+    "type": "task"
+  },
+  {
+    "title": "Record demo for student well-being app",
+    "phase": "closing",
+    "project_id": "proj_001",
+    "project_title": "Student Well-being AI Application",
+    "date": "2026-06-08",
+    "start_time": "10:00",
+    "end_time": "12:30",
+    "type": "task"
+  },
+  {
     "title": "Define problem statement and key features",
     "phase": "concept",
-    "date": "2026-05-25",
-    "start_time": "09:00",
-    "end_time": "11:00",
+    "project_id": "proj_001",
+    "project_title": "Student Well-being AI Application",
+    "date": "2026-06-08",
+    "start_time": "12:30",
+    "end_time": "14:00",
+    "type": "task"
+  },
+  {
+    "title": "Define problem statement and key features",
+    "phase": "concept",
+    "project_id": "proj_001",
+    "project_title": "Student Well-being AI Application",
+    "date": "2026-06-08",
+    "start_time": "15:30",
+    "end_time": "16:00",
     "type": "task"
   },
   {
     "title": "Design JSON object structure for task data collection",
     "phase": "planning",
-    "date": "2026-05-25",
-    "start_time": "11:00",
-    "end_time": "11:45",
+    "project_id": "proj_001",
+    "project_title": "Student Well-being AI Application",
+    "date": "2026-06-08",
+    "start_time": "16:00",
+    "end_time": "16:45",
     "type": "task"
   },
   {
     "title": "Plan Q&A session to fill in project JSON structure",
     "phase": "planning",
-    "date": "2026-05-25",
-    "start_time": "11:45",
-    "end_time": "12:45",
+    "project_id": "proj_001",
+    "project_title": "Student Well-being AI Application",
+    "date": "2026-06-09",
+    "start_time": "09:00",
+    "end_time": "10:00",
     "type": "task"
   },
   {
     "title": "Allow users to export Google/Teams calendar as CSV file",
     "phase": "planning",
-    "date": "2026-05-25",
-    "start_time": "12:45",
-    "end_time": "13:15",
+    "project_id": "proj_001",
+    "project_title": "Student Well-being AI Application",
+    "date": "2026-06-09",
+    "start_time": "10:00",
+    "end_time": "10:30",
     "type": "task"
   },
   {
     "title": "Implement CSV export feature from user's calendar",
     "phase": "execution",
-    "date": "2026-05-25",
-    "start_time": "13:15",
-    "end_time": "15:30",
+    "project_id": "proj_001",
+    "project_title": "Student Well-being AI Application",
+    "date": "2026-06-09",
+    "start_time": "10:30",
+    "end_time": "12:00",
+    "type": "task"
+  },
+  {
+    "title": "Implement CSV export feature from user's calendar",
+    "phase": "execution",
+    "project_id": "proj_001",
+    "project_title": "Student Well-being AI Application",
+    "date": "2026-06-09",
+    "start_time": "13:00",
+    "end_time": "13:45",
     "type": "task"
   },
   {
     "title": "Develop AI logic for task scheduling and optimization",
     "phase": "execution",
-    "date": "2026-05-27",
+    "project_id": "proj_001",
+    "project_title": "Student Well-being AI Application",
+    "date": "2026-06-10",
     "start_time": "09:00",
     "end_time": "14:00",
     "type": "task"
@@ -50,33 +102,99 @@
   {
     "title": "Integrate JSON object structure with AI logic for task data collection",
     "phase": "execution",
-    "date": "2026-05-28",
-    "start_time": "11:30",
-    "end_time": "14:00",
+    "project_id": "proj_001",
+    "project_title": "Student Well-being AI Application",
+    "date": "2026-06-10",
+    "start_time": "14:00",
+    "end_time": "16:30",
     "type": "task"
   },
   {
     "title": "Test and refine AI-powered task scheduler",
     "phase": "controlling",
-    "date": "2026-05-28",
-    "start_time": "14:00",
-    "end_time": "16:00",
+    "project_id": "proj_001",
+    "project_title": "Student Well-being AI Application",
+    "date": "2026-06-11",
+    "start_time": "09:00",
+    "end_time": "11:00",
     "type": "task"
   },
   {
     "title": "Document lessons learned and evaluation of success",
     "phase": "closing",
-    "date": "2026-05-28",
-    "start_time": "16:00",
-    "end_time": "17:00",
+    "project_id": "proj_001",
+    "project_title": "Student Well-being AI Application",
+    "date": "2026-06-11",
+    "start_time": "11:00",
+    "end_time": "12:00",
     "type": "task"
   },
   {
-    "title": "Finalize project report and presentation materials",
+    "title": "Presentation on the 13th",
     "phase": "closing",
-    "date": "2026-05-29",
-    "start_time": "09:00",
-    "end_time": "10:00",
+    "project_id": "proj_001",
+    "project_title": "Student Well-being AI Application",
+    "date": "2026-06-11",
+    "start_time": "12:00",
+    "end_time": "15:00",
     "type": "task"
+  },
+  {
+    "title": "Research new trends in portfolios",
+    "phase": "concept",
+    "project_id": "proj_002",
+    "project_title": "Data Science Portfolio Website",
+    "date": "2026-06-12",
+    "start_time": "09:00",
+    "end_time": "12:00",
+    "type": "task"
+  },
+  {
+    "title": "Hoorcollege Data Driven Decision Making",
+    "phase": "fixed_appointment",
+    "date": "2026-05-26",
+    "start_time": "10:00",
+    "end_time": "12:30",
+    "type": "block"
+  },
+  {
+    "title": "Wekelijks overleg manager",
+    "phase": "fixed_appointment",
+    "date": "2026-05-27",
+    "start_time": "14:00",
+    "end_time": "15:00",
+    "type": "block"
+  },
+  {
+    "title": "Projectgroep Bijeenkomst AI",
+    "phase": "fixed_appointment",
+    "date": "2026-05-28",
+    "start_time": "09:30",
+    "end_time": "11:30",
+    "type": "block"
+  },
+  {
+    "title": "Tandartscontrole",
+    "phase": "fixed_appointment",
+    "date": "2026-05-29",
+    "start_time": "11:00",
+    "end_time": "11:45",
+    "type": "block"
+  },
+  {
+    "title": "Dentist",
+    "phase": "fixed_appointment",
+    "date": "2026-06-09",
+    "start_time": "12:00",
+    "end_time": "13:00",
+    "type": "block"
+  },
+  {
+    "title": "Personal Appointment",
+    "phase": "fixed_appointment",
+    "date": "2026-06-08",
+    "start_time": "14:00",
+    "end_time": "15:30",
+    "type": "block"
   }
 ]

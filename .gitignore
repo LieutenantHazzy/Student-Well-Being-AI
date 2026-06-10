@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.venv/
+venv/
+env/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+~$*
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+
+# Project specific
+node_modules/

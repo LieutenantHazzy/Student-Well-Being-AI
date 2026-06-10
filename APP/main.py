@@ -1,14 +1,17 @@
 import json
-import os
 import re
+import sys
+import uuid
+from pathlib import Path
+
 from ollama import chat, ChatResponse
 
-# Importeer de rekenmodule uit je scheduler script
+sys.path.insert(0, str(Path(__file__).parent))
 from scheduler import schedule_tasks_rule_based
 
-# Define strict folder paths based on your architecture requirements
-JSON_DIR = os.path.join(os.path.dirname(__file__), '..', 'JSON')
-PROJECTS_FILE = os.path.join(JSON_DIR, 'projects.json')
+BASE_DIR = Path(__file__).resolve().parent.parent
+JSON_DIR = BASE_DIR / 'JSON'
+PROJECTS_FILE = JSON_DIR / 'projects.json'
 
 # The comprehensive system prompt mapping out validation gates and structural business rules
 SYSTEM_PROMPT = """
@@ -17,41 +20,46 @@ You must categorize tasks into exactly 5 phases: concept, planning, execution, c
 
 Business Rules for Tasks:
 1. Every single task must take a minimum of 0.5 hours. No task can be smaller than 0.5 hours.
+2. Tasks can optionally have their own deadline (formatted as YYYY-MM-DD). If the user says a task must be done by a specific date, include a "deadline" field for that task.
+
+The system supports MULTIPLE projects. When the user talks about a new project, create a new project object.
+When they refer to an existing project (e.g., "update my AI project"), output the updated project with the SAME title so the system can match it.
 
 Your primary goal is to gather all necessary data before finalizing the layout.
 Necessary data includes:
 1. A clear project title.
-2. A valid deadline (formatted as YYYY-MM-DD).
+2. A valid project deadline (formatted as YYYY-MM-DD).
 3. At least one task estimated in hours for relevant project phases.
 
 CRITICAL INSTRUCTIONS FOR MODE SELECTION:
 - If any necessary data is missing, vague, or if you need validation from the user, you must output a conversational message asking the user clarifying questions. Do NOT output a JSON block yet.
-- Only when you have ALL necessary information and the user explicitly gives permission, says "approve", "looks good", "lgtm", or asks you to save/update the file, you MUST switch modes and output a strict raw JSON object configuration matching this schema exactly:
+- Only when you have ALL necessary information and the user explicitly gives permission, says "approve", "looks good", "lgtm", or asks you to save/update the file, you MUST switch modes and output a JSON object inside a Markdown code block matching this schema exactly:
 
+```json
 {
   "project_title": "Name of the project",
   "deadline": "YYYY-MM-DD",
   "phases": {
-    "concept": [{"title": "task name", "hours_required": 2.0}],
-    "planning": [],
+      "concept": [{"title": "task name", "hours_required": 2.0}],
+    "planning": [{"title": "task with its own deadline", "hours_required": 1.0, "deadline": "2026-06-10"}],
     "execution": [],
     "controlling": [],
     "closing": []
   }
 }
+```
 
-Ensure the JSON structure is intact. You are allowed to include a polite confirmation sentence before or after the JSON block, as long as the JSON block itself is properly formatted.
+The JSON must be inside a ```json code block. Do not output raw JSON outside a code block.
 """
 
 def ensure_json_directory():
     """Validates local file system paths and initializes the JSON folder if missing."""
-    if not os.path.exists(JSON_DIR):
-        os.makedirs(JSON_DIR)
+    JSON_DIR.mkdir(parents=True, exist_ok=True)
 
 def load_local_memory() -> dict:
     """Loads current state from local file memory to establish state change tracking."""
     ensure_json_directory()
-    if os.path.exists(PROJECTS_FILE):
+    if PROJECTS_FILE.exists():
         with open(PROJECTS_FILE, 'r') as f:
             try:
                 return json.load(f)
@@ -63,20 +71,11 @@ def show_merge_request(old_data: dict, new_data: dict) -> bool:
     """Prints a clean, human-readable Git-style comparison between old and new project states."""
     print("\n" + "=" * 25 + " 🚀 MERGE REQUEST DIALOGUE " + "=" * 25)
     
-    # Extract project names safely from potential wrapping variants
     def get_project_title(data):
-        if "project_title" in data:
-            return data["project_title"]
-        if "projects" in data and len(data["projects"]) > 0:
-            return data["projects"][-1].get("title", "Unknown Project")
-        return "New Project Setup"
+        return data.get("project_title", "New Project Setup")
 
     def get_deadline(data):
-        if "deadline" in data:
-            return data["deadline"]
-        if "projects" in data and len(data["projects"]) > 0:
-            return data["projects"][-1].get("deadline", "None")
-        return "None"
+        return data.get("deadline", "None")
 
     old_title = get_project_title(old_data)
     new_title = get_project_title(new_data)
@@ -97,21 +96,14 @@ def show_merge_request(old_data: dict, new_data: dict) -> bool:
 
     # Helper to flatten tasks by phase for easy side-by-side comparison
     def get_tasks_dict(data):
-        phases_data = {}
-        if "phases" in data:
-            phases_data = data["phases"]
-        elif "projects" in data and len(data["projects"]) > 0:
-            phases_data = data["projects"][-1].get("phases", {})
-        
         flattened = {}
-        for phase, tasks in phases_data.items():
+        for phase, tasks in data.get("phases", {}).items():
             if isinstance(tasks, list):
                 for t in tasks:
                     if isinstance(t, dict) and "title" in t:
-                        # Normalize hours field variants
                         flattened[t["title"]] = {
                             "phase": phase,
-                            "hours": t.get("hours_required", t.get("hours", 0.5))
+                            "hours": t.get("hours_required", 0.5)
                         }
         return flattened
 
@@ -161,10 +153,15 @@ def run_planner_agent():
     ]
     
     # Inject current local file state as an operational system baseline
-    if current_memory:
+    projects = current_memory.get("projects", [])
+    if projects:
+        summary = [
+            {"project_title": p["project_title"], "deadline": p.get("deadline")}
+            for p in projects
+        ]
         conversation_history.append({
             'role': 'system', 
-            'content': f"The current stored project memory state on the user's computer is: {json.dumps(current_memory)}"
+            'content': f"The user's existing projects are: {json.dumps(summary)}"
         })
 
     print("🤖 [Smart AI Planner Initialization] State active. Say hello or type your project details!")
@@ -196,37 +193,58 @@ def run_planner_agent():
         
         ai_reply = response.message.content
         
-        # Robust Regex Engine: Safely find and isolate JSON blocks even if hidden inside conversation paragraphs
-        json_match = re.search(r'(\{.*\}).*', ai_reply, re.DOTALL)
+        # Extract JSON from Markdown code block first, fall back to raw brace matching
+        code_block = re.search(r'```(?:json)?\s*\n?([\s\S]*?)```', ai_reply)
+        json_string = code_block.group(1).strip() if code_block else None
+        if not json_string:
+            brace_match = re.search(r'\{.*\}', ai_reply, re.DOTALL)
+            if brace_match:
+                json_string = brace_match.group(0)
         
-        if json_match:
+        if json_string:
             try:
-                json_string = json_match.group(1)
-                proposed_memory = json.loads(json_string)
-                
-                # Execution of clean human-oriented PR interface diff comparison
-                is_approved = show_merge_request(current_memory, proposed_memory)
-                
-                if is_approved:
-                    with open(PROJECTS_FILE, 'w') as f:
-                        json.dump(proposed_memory, f, indent=2)
-                    print("✅ Data locked and written successfully to 'JSON/projects.json'.")
-                    
-                    # 🎯 HIER GEBEURT DE AUTOMATISCHE MAGIE:
-                    print("🚀 Smart AI Planner triggert automatisch de Scheduler Agent...")
-                    schedule_result = schedule_tasks_rule_based()
-                    
-                    if schedule_result["status"] == "success":
-                        print("📅 Systeem-update: Vrije gaten zijn berekend en 'scheduled_tasks.json' is up-to-date!")
-                    else:
-                        print(f"⚠️ Scheduler waarschuwing: {schedule_result.get('message')}")
-                        
-                    current_memory = proposed_memory
+                proposed = json.loads(json_string)
+                if proposed.get("type") == "appointment":
+                    print(f"\n⚠️ Appointment saving not supported in CLI mode.")
+                    conversation_history.append({'role': 'assistant', 'content': ai_reply})
                 else:
-                    print("❌ Changes discarded. Session remaining open for further instruction.")
-                
-                # Sync conversation history block to track operational state progression
-                conversation_history.append({'role': 'assistant', 'content': ai_reply})
+                    # Find existing project by title or treat as new
+                    projects = current_memory.get("projects", [])
+                    title = proposed.get("project_title", "")
+                    existing = next((p for p in projects if p.get("project_title") == title), {})
+                    is_new = not existing
+                    
+                    print(f"\n{'🆕 NEW PROJECT' if is_new else '📝 UPDATE PROJECT'}: {title}")
+                    is_approved = show_merge_request(existing, proposed)
+                    
+                    if is_approved:
+                        if is_new:
+                            proposed["project_id"] = uuid.uuid4().hex[:12]
+                            projects.append(proposed)
+                        else:
+                            proposed["project_id"] = existing.get("project_id", uuid.uuid4().hex[:12])
+                            for i, p in enumerate(projects):
+                                if p.get("project_title") == title:
+                                    projects[i] = proposed
+                                    break
+                        
+                        with open(PROJECTS_FILE, 'w') as f:
+                            json.dump({"projects": projects}, f, indent=2)
+                        print("✅ Data locked and written successfully to 'JSON/projects.json'.")
+                        
+                        print("🚀 Smart AI Planner triggert automatisch de Scheduler Agent...")
+                        schedule_result = schedule_tasks_rule_based()
+                        
+                        if schedule_result["status"] == "success":
+                            print("📅 Systeem-update: Vrije gaten zijn berekend en 'scheduled_tasks.json' is up-to-date!")
+                        else:
+                            print(f"⚠️ Scheduler waarschuwing: {schedule_result.get('message')}")
+                            
+                        current_memory = {"projects": projects}
+                    else:
+                        print("❌ Changes discarded. Session remaining open for further instruction.")
+                    
+                    conversation_history.append({'role': 'assistant', 'content': ai_reply})
                 
             except json.JSONDecodeError:
                 # If regex caught mismatched braces that don't match JSON syntax, fallback to chat lines

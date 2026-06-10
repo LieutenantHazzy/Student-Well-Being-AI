@@ -4,7 +4,13 @@
   "working_hours": {
     "start": "09:00",
     "end": "17:00",
-    "work_days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    "work_days": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ]
   },
   "blocked_slots": [
     {
@@ -30,6 +36,18 @@
       "date": "2026-05-29",
       "start_time": "11:00",
       "end_time": "11:45"
+    },
+    {
+      "title": "Dentist",
+      "date": "2026-06-09",
+      "start_time": "12:00",
+      "end_time": "13:00"
+    },
+    {
+      "title": "Personal Appointment",
+      "date": "2026-06-08",
+      "start_time": "14:00",
+      "end_time": "15:30"
     }
   ]
 }

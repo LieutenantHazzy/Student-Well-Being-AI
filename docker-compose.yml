@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./JSON:/app/JSON
+      - ./APP:/app/APP
+    environment:
+      - OLLAMA_HOST=http://host.docker.internal:11434
+    command: ["uvicorn", "APP.api.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./agenda/src:/app/src
+      - ./agenda/index.html:/app/index.html
+      - ./agenda/vite.config.js:/app/vite.config.js
+      - ./agenda/public:/app/public
+    environment:
+      - BACKEND_URL=http://backend:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
