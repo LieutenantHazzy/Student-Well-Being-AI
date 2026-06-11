@@ -8,7 +8,6 @@ export default function Chat() {
   const [convId, setConvId] = useState(null)
   const [pendingConfirm, setPendingConfirm] = useState(null)
   const messagesEndRef = useRef(null)
-  const streamRef = useRef(null)
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -46,7 +45,6 @@ export default function Chat() {
     })
 
     const reader = resp.body.getReader()
-    streamRef.current = reader
     const decoder = new TextDecoder()
     let buffer = ''
 
@@ -82,7 +80,6 @@ export default function Chat() {
       }
     }
     setLoading(false)
-    streamRef.current = null
   }
 
   async function handleConfirm(approved) {

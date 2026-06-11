@@ -48,6 +48,12 @@
       "date": "2026-06-08",
       "start_time": "14:00",
       "end_time": "15:30"
+    },
+    {
+      "title": "Private Appointment",
+      "date": "2026-06-08",
+      "start_time": "12:00",
+      "end_time": "13:00"
     }
   ]
 }

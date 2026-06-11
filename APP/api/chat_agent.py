@@ -125,7 +125,31 @@ class ConversationAgent:
                 return None
         return None
 
+    def _validate_and_normalize_project(self, data: dict) -> dict:
+        field_aliases = {
+            "title": "project_title",
+            "name": "project_title",
+            "due_date": "deadline",
+            "due": "deadline",
+            "tasks": "phases",
+        }
+        for alias, correct in field_aliases.items():
+            if alias in data and correct not in data:
+                data[correct] = data.pop(alias)
+
+        required_phases = ["concept", "planning", "execution", "controlling", "closing"]
+        phases = data.get("phases", {})
+        if not isinstance(phases, dict):
+            phases = {}
+        for phase in required_phases:
+            if phase not in phases or not isinstance(phases[phase], list):
+                phases[phase] = []
+        data["phases"] = phases
+
+        return data
+
     def _save_project(self, data: dict) -> dict:
+        data = self._validate_and_normalize_project(data)
         current = self._load_current_memory()
         projects = current.get("projects", [])
 
@@ -218,6 +242,8 @@ class ConversationAgent:
         ai_reply = response.message.content
 
         extracted = self._extract_json(ai_reply)
+        if extracted and extracted.get("type") != "appointment":
+            extracted = self._validate_and_normalize_project(extracted)
         if extracted:
             history.append({'role': 'assistant', 'content': ai_reply})
 

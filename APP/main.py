@@ -67,6 +67,29 @@ def load_local_memory() -> dict:
                 return {}
     return {}
 
+def validate_and_normalize_project(data: dict) -> dict:
+    field_aliases = {
+        "title": "project_title",
+        "name": "project_title",
+        "due_date": "deadline",
+        "due": "deadline",
+        "tasks": "phases",
+    }
+    for alias, correct in field_aliases.items():
+        if alias in data and correct not in data:
+            data[correct] = data.pop(alias)
+
+    required_phases = ["concept", "planning", "execution", "controlling", "closing"]
+    phases = data.get("phases", {})
+    if not isinstance(phases, dict):
+        phases = {}
+    for phase in required_phases:
+        if phase not in phases or not isinstance(phases[phase], list):
+            phases[phase] = []
+    data["phases"] = phases
+
+    return data
+
 def show_merge_request(old_data: dict, new_data: dict) -> bool:
     """Prints a clean, human-readable Git-style comparison between old and new project states."""
     print("\n" + "=" * 25 + " 🚀 MERGE REQUEST DIALOGUE " + "=" * 25)
@@ -218,6 +241,7 @@ def run_planner_agent():
                     is_approved = show_merge_request(existing, proposed)
                     
                     if is_approved:
+                        proposed = validate_and_normalize_project(proposed)
                         if is_new:
                             proposed["project_id"] = uuid.uuid4().hex[:12]
                             projects.append(proposed)

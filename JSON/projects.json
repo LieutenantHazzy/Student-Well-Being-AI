@@ -63,6 +63,10 @@
             "title": "Presentation on the 13th",
             "hours_required": 3.0,
             "deadline": "2026-06-13"
+          },
+          {
+            "title": "Push code to GitHub",
+            "hours_required": 0.5
           }
         ]
       },
@@ -84,12 +88,6 @@
         "closing": []
       },
       "project_id": "proj_002"
-    },
-    {
-      "title": "Presentation on the 13th",
-      "hours_required": 3.0,
-      "deadline": "2026-06-13",
-      "project_id": "5fb61c8ee1f7"
     }
   ]
 }
